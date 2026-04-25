@@ -1,0 +1,49 @@
+# ============================================================
+# Root-level .gitignore for CareFusion Hospital System
+# ============================================================
+
+# --- Node Modules ---
+node_modules/
+**/node_modules/
+
+# --- Environment Files (CRITICAL — contains secrets) ---
+.env
+.env.local
+.env.production
+.env.*.local
+backend/.env
+
+# --- Build Outputs ---
+frontend/dist/
+frontend/dist-ssr/
+frontend/build/
+
+# --- Uploaded User Files (may contain PHI) ---
+backend/uploads/
+backend/tmp/
+
+# --- Log Files ---
+*.log
+backend/error_log.txt
+backend/pdf_extraction.log
+backend/import_output.txt
+
+# --- Database Data ---
+data/
+
+# --- OS / Editor Files ---
+.DS_Store
+Thumbs.db
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# --- IDE ---
+.idea/
+.vscode/
+!.vscode/extensions.json
+
+# --- Lock files (optional: include if you want reproducible installs) ---
+# package-lock.json  ← Keep this, it ensures consistent installs

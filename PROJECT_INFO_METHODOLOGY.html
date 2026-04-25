@@ -1,0 +1,777 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CareFusion HMS – Project Information & Methodology</title>
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #0f1117;
+      --surface: #1a1d2e;
+      --surface2: #232640;
+      --border: #2e3155;
+      --accent: #6c63ff;
+      --accent2: #00d2ff;
+      --accent3: #ff6b6b;
+      --green: #43e97b;
+      --yellow: #f7971e;
+      --text: #e8eaf6;
+      --muted: #8991b3;
+      --radius: 16px;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      padding: 0 0 60px;
+    }
+
+    /* ── HERO BANNER ── */
+    .hero {
+      background: linear-gradient(135deg, #1a0533 0%, #0d1b4b 50%, #071a26 100%);
+      border-bottom: 2px solid var(--border);
+      padding: 60px 40px 50px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse at 30% 50%, rgba(108,99,255,.18) 0%, transparent 60%),
+                  radial-gradient(ellipse at 70% 50%, rgba(0,210,255,.12) 0%, transparent 60%);
+      pointer-events: none;
+    }
+    .hero-badge {
+      display: inline-block;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      color: #fff;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      padding: 6px 18px;
+      border-radius: 50px;
+      margin-bottom: 18px;
+    }
+    .hero h1 {
+      font-size: clamp(2rem, 5vw, 3.4rem);
+      font-weight: 800;
+      background: linear-gradient(90deg, #fff 30%, var(--accent2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 14px;
+      line-height: 1.15;
+    }
+    .hero p {
+      font-size: 1.1rem;
+      color: var(--muted);
+      max-width: 680px;
+      margin: 0 auto 30px;
+      line-height: 1.7;
+    }
+    .hero-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      justify-content: center;
+    }
+    .meta-chip {
+      background: rgba(255,255,255,.07);
+      border: 1px solid var(--border);
+      border-radius: 50px;
+      padding: 7px 16px;
+      font-size: 13px;
+      color: var(--muted);
+    }
+    .meta-chip span { color: var(--text); font-weight: 600; }
+
+    /* ── SECTIONS ── */
+    .container { max-width: 1300px; margin: 0 auto; padding: 0 30px; }
+    section { margin-top: 60px; }
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 32px;
+    }
+    .section-icon {
+      width: 46px; height: 46px;
+      border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 22px;
+      flex-shrink: 0;
+    }
+    .section-title { font-size: 1.55rem; font-weight: 700; }
+    .section-sub { font-size: .9rem; color: var(--muted); margin-top: 2px; }
+
+    /* ── TECH STACK GRID ── */
+    .tech-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 18px;
+    }
+    .tech-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 22px 18px;
+      text-align: center;
+      transition: transform .2s, border-color .2s;
+    }
+    .tech-card:hover { transform: translateY(-4px); border-color: var(--accent); }
+    .tech-card .icon { font-size: 2.2rem; margin-bottom: 10px; }
+    .tech-card h4 { font-size: .95rem; font-weight: 600; }
+    .tech-card p { font-size: .78rem; color: var(--muted); margin-top: 4px; }
+
+    /* ── ROLE CARDS ── */
+    .role-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 22px;
+    }
+    .role-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 26px;
+      position: relative;
+      overflow: hidden;
+      transition: transform .25s, box-shadow .25s;
+    }
+    .role-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 4px;
+      border-radius: var(--radius) var(--radius) 0 0;
+    }
+    .role-card:hover { transform: translateY(-5px); box-shadow: 0 12px 40px rgba(0,0,0,.4); }
+    .role-card .role-icon { font-size: 2.4rem; margin-bottom: 12px; }
+    .role-card h3 { font-size: 1.1rem; font-weight: 700; margin-bottom: 10px; }
+    .role-card ul { padding-left: 18px; }
+    .role-card li { font-size: .85rem; color: var(--muted); margin-bottom: 6px; line-height: 1.5; }
+    .role-card li::marker { color: var(--accent2); }
+
+    .r-patient::before  { background: linear-gradient(90deg, #43e97b, #38f9d7); }
+    .r-doctor::before   { background: linear-gradient(90deg, #4facfe, #00f2fe); }
+    .r-staff::before    { background: linear-gradient(90deg, #f7971e, #ffd200); }
+    .r-pharmacy::before { background: linear-gradient(90deg, #ff6b6b, #feca57); }
+    .r-lab::before      { background: linear-gradient(90deg, #a18cd1, #fbc2eb); }
+    .r-admin::before    { background: linear-gradient(90deg, #6c63ff, #48dbfb); }
+
+    /* ── METHODOLOGY DIAGRAM ── */
+    .mermaid-wrap {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 36px 20px;
+      overflow-x: auto;
+    }
+    .mermaid { display: flex; justify-content: center; }
+
+    /* ── WORKFLOW TABLE ── */
+    .workflow-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: .92rem;
+    }
+    .workflow-table th {
+      background: var(--surface2);
+      padding: 14px 18px;
+      text-align: left;
+      font-weight: 600;
+      color: var(--accent2);
+      border-bottom: 2px solid var(--border);
+    }
+    .workflow-table td {
+      padding: 13px 18px;
+      border-bottom: 1px solid var(--border);
+      color: var(--muted);
+      vertical-align: top;
+    }
+    .workflow-table tr:hover td { background: rgba(108,99,255,.06); color: var(--text); }
+    .step-badge {
+      display: inline-block;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      color: #fff;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 3px 10px;
+      border-radius: 50px;
+      white-space: nowrap;
+    }
+
+    /* ── API TABLE ── */
+    .api-section { margin-top: 20px; }
+    .api-group { margin-bottom: 28px; }
+    .api-group h4 {
+      font-size: .95rem;
+      font-weight: 600;
+      color: var(--accent2);
+      margin-bottom: 10px;
+      border-left: 3px solid var(--accent);
+      padding-left: 10px;
+    }
+    .api-table { width: 100%; border-collapse: collapse; font-size: .82rem; }
+    .api-table th { background: var(--surface2); padding: 10px 14px; text-align: left; color: var(--muted); font-weight: 600; border-bottom: 1px solid var(--border); }
+    .api-table td { padding: 10px 14px; border-bottom: 1px solid rgba(46,49,85,.5); color: var(--muted); }
+    .api-table tr:hover td { background: rgba(108,99,255,.05); }
+    .method {
+      display: inline-block;
+      font-family: 'Fira Code', monospace;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 4px;
+      color: #fff;
+    }
+    .get  { background: #27ae60; }
+    .post { background: #2980b9; }
+    .put  { background: #d35400; }
+    .del  { background: #c0392b; }
+    code { font-family: 'Fira Code', monospace; font-size: .83rem; color: var(--accent2); }
+
+    /* ── SECURITY / AI GRID ── */
+    .feat-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 16px;
+    }
+    .feat-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px;
+      transition: border-color .2s;
+    }
+    .feat-card:hover { border-color: var(--accent); }
+    .feat-card .f-icon { font-size: 1.8rem; margin-bottom: 8px; }
+    .feat-card h5 { font-size: .9rem; font-weight: 600; margin-bottom: 6px; }
+    .feat-card p { font-size: .8rem; color: var(--muted); line-height: 1.55; }
+
+    /* ── FOOTER ── */
+    .footer {
+      margin-top: 80px;
+      text-align: center;
+      color: var(--muted);
+      font-size: .85rem;
+      padding: 0 20px;
+    }
+    .footer span { color: var(--accent); }
+
+    /* ── DIVIDER ── */
+    hr.divider {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 0;
+    }
+  </style>
+</head>
+<body>
+
+<!-- ═══════════ HERO ═══════════ -->
+<div class="hero">
+  <div class="hero-badge">MERN Stack · Full Stack Project</div>
+  <h1>CareFusion<br>Hospital Management System</h1>
+  <p>
+    A comprehensive, role-based hospital management platform built on the MERN stack,
+    supporting six distinct user roles with end-to-end clinical workflows, AI analytics,
+    and enterprise-grade security.
+  </p>
+  <div class="hero-meta">
+    <div class="meta-chip">Version <span>1.0</span></div>
+    <div class="meta-chip">Backend <span>Node.js + Express</span></div>
+    <div class="meta-chip">Frontend <span>React 18</span></div>
+    <div class="meta-chip">Database <span>MongoDB</span></div>
+    <div class="meta-chip">Auth <span>JWT + bcrypt</span></div>
+    <div class="meta-chip">Roles <span>6</span></div>
+    <div class="meta-chip">Status <span>Production Ready ✅</span></div>
+  </div>
+</div>
+
+<div class="container">
+
+  <!-- ═══════════ TECH STACK ═══════════ -->
+  <section>
+    <div class="section-header">
+      <div class="section-icon" style="background:linear-gradient(135deg,#6c63ff,#48dbfb)">⚙️</div>
+      <div>
+        <div class="section-title">Technology Stack</div>
+        <div class="section-sub">Core technologies powering the system</div>
+      </div>
+    </div>
+    <div class="tech-grid">
+      <div class="tech-card"><div class="icon">🟢</div><h4>Node.js</h4><p>Runtime environment</p></div>
+      <div class="tech-card"><div class="icon">🚂</div><h4>Express.js</h4><p>REST API framework</p></div>
+      <div class="tech-card"><div class="icon">🍃</div><h4>MongoDB</h4><p>NoSQL database</p></div>
+      <div class="tech-card"><div class="icon">🔗</div><h4>Mongoose</h4><p>ODM for MongoDB</p></div>
+      <div class="tech-card"><div class="icon">⚛️</div><h4>React 18</h4><p>Frontend library</p></div>
+      <div class="tech-card"><div class="icon">🔀</div><h4>React Router v6</h4><p>Client-side routing</p></div>
+      <div class="tech-card"><div class="icon">🔑</div><h4>JWT</h4><p>Stateless authentication</p></div>
+      <div class="tech-card"><div class="icon">🛡️</div><h4>bcrypt</h4><p>Password hashing</p></div>
+      <div class="tech-card"><div class="icon">📡</div><h4>Axios</h4><p>HTTP client</p></div>
+      <div class="tech-card"><div class="icon">📁</div><h4>Multer</h4><p>File upload handling</p></div>
+      <div class="tech-card"><div class="icon">🔍</div><h4>Typesense</h4><p>Lab test autocomplete search</p></div>
+      <div class="tech-card"><div class="icon">🐳</div><h4>Docker</h4><p>Container support</p></div>
+    </div>
+  </section>
+
+  <!-- ═══════════ METHODOLOGY DIAGRAM ═══════════ -->
+  <section>
+    <div class="section-header">
+      <div class="section-icon" style="background:linear-gradient(135deg,#f7971e,#ffd200)">🗺️</div>
+      <div>
+        <div class="section-title">System Methodology Diagram</div>
+        <div class="section-sub">End-to-end data and workflow flow across all modules</div>
+      </div>
+    </div>
+    <div class="mermaid-wrap">
+      <div class="mermaid">
+flowchart TD
+  classDef user fill:#1e2a4a,stroke:#6c63ff,color:#e8eaf6,rx:8
+  classDef module fill:#162040,stroke:#00d2ff,color:#e8eaf6,rx:8
+  classDef db fill:#1a2e1a,stroke:#43e97b,color:#e8eaf6,rx:8
+  classDef ai fill:#2a1a2e,stroke:#a18cd1,color:#e8eaf6,rx:8
+  classDef sec fill:#2e1a1a,stroke:#ff6b6b,color:#e8eaf6,rx:8
+
+  subgraph USERS["👤 User Layer"]
+    direction LR
+    P["🧑‍⚕️ Patient"]
+    D["👨‍⚕️ Doctor"]
+    S["👥 Staff"]
+    PH["💊 Pharmacist"]
+    L["🔬 Lab Tech"]
+    A["🔐 Admin"]
+  end
+
+  subgraph AUTH["🔒 Authentication Layer"]
+    direction LR
+    LOGIN["Login / Register"]
+    JWT["JWT Token Issued"]
+    RBAC["RBAC Middleware\n(role-check)"]
+    LOGIN --> JWT --> RBAC
+  end
+
+  subgraph API["🚀 Express REST API (Port 5000)"]
+    direction TB
+    AR["Auth Routes\n/api/auth"]
+    ADR["Admin Routes\n/api/admin"]
+    PR["Patient Routes\n/api/patient"]
+    DR["Doctor Routes\n/api/doctor"]
+    SR["Staff Routes\n/api/staff"]
+    PHR["Pharmacy Routes\n/api/pharmacy"]
+    LR["Lab Routes\n/api/laboratory"]
+    AIR["AI Routes\n/api/ai"]
+  end
+
+  subgraph DB["🗄️ MongoDB Collections"]
+    direction TB
+    Users[("Users")]
+    Patients[("Patients")]
+    Doctors[("Doctors")]
+    Appts[("Appointments")]
+    Queue[("Queue")]
+    Prescriptions[("Prescriptions")]
+    LabTests[("Lab Tests")]
+    Departments[("Departments")]
+    AuditLog[("Audit Logs")]
+    HospConfig[("Hospital Config")]
+  end
+
+  subgraph WORKFLOWS["⚡ Core Clinical Workflows"]
+    direction TB
+    W1["1️⃣ Admin creates user accounts"]
+    W2["2️⃣ Patient books appointment\n(online / walk-in via Staff)"]
+    W3["3️⃣ Staff adds patient to OPD queue\n(token system)"]
+    W4["4️⃣ Doctor views EMR, creates\nprescription & lab requests"]
+    W5["5️⃣ Pharmacy receives & dispenses\nprescription"]
+    W6["6️⃣ Lab processes tests,\nuploads PDF report"]
+    W7["7️⃣ Patient views prescription\n& downloads lab report"]
+    W1-->W2-->W3-->W4
+    W4-->W5
+    W4-->W6
+    W5-->W7
+    W6-->W7
+  end
+
+  subgraph AI["🤖 AI Analytics Engine"]
+    AI1["Smart Slot Suggestion"]
+    AI2["Disease Pattern Analysis"]
+    AI3["Patient Risk Prediction"]
+    AI4["Doctor Workload Balancing"]
+    AI5["Peak Hour Prediction"]
+    AI6["Medicine Demand Forecast"]
+  end
+
+  subgraph SEC["🛡️ Security Layer"]
+    S1["bcrypt Password Hashing"]
+    S2["JWT Expiry + Refresh"]
+    S3["XSS & Input Sanitization"]
+    S4["Failed Login Lockout"]
+    S5["Access Logging / Audit Trail"]
+    S6["QR Code Digital Signature"]
+  end
+
+  USERS --> AUTH
+  AUTH --> API
+  API --> DB
+  API --> WORKFLOWS
+  API --> AI
+  API --> SEC
+
+  class P,D,S,PH,L,A user
+  class AR,ADR,PR,DR,SR,PHR,LR,AIR module
+  class Users,Patients,Doctors,Appts,Queue,Prescriptions,LabTests,Departments,AuditLog,HospConfig db
+  class AI1,AI2,AI3,AI4,AI5,AI6 ai
+  class S1,S2,S3,S4,S5,S6 sec
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════ USER ROLES ═══════════ -->
+  <section>
+    <div class="section-header">
+      <div class="section-icon" style="background:linear-gradient(135deg,#43e97b,#38f9d7)">👥</div>
+      <div>
+        <div class="section-title">User Roles & Responsibilities</div>
+        <div class="section-sub">Six distinct roles, each with a dedicated dashboard and permissions</div>
+      </div>
+    </div>
+    <div class="role-grid">
+      <div class="role-card r-patient">
+        <div class="role-icon">🧑‍⚕️</div>
+        <h3>Patient</h3>
+        <ul>
+          <li>Book appointments online</li>
+          <li>View appointment history</li>
+          <li>Access digital prescriptions</li>
+          <li>View & download lab reports</li>
+          <li>Read-only access to own EMR</li>
+        </ul>
+      </div>
+      <div class="role-card r-doctor">
+        <div class="role-icon">👨‍⚕️</div>
+        <h3>Doctor</h3>
+        <ul>
+          <li>View daily appointments & OPD queue</li>
+          <li>Access full patient EMR</li>
+          <li>Create digital prescriptions</li>
+          <li>Order lab tests with priority</li>
+          <li>Receive AI slot suggestions</li>
+        </ul>
+      </div>
+      <div class="role-card r-staff">
+        <div class="role-icon">👥</div>
+        <h3>Staff</h3>
+        <ul>
+          <li>Manage daily OPD queue (token system)</li>
+          <li>Book walk-in appointments</li>
+          <li>View patient & doctor lists</li>
+          <li>Update queue status in real time</li>
+        </ul>
+      </div>
+      <div class="role-card r-pharmacy">
+        <div class="role-icon">💊</div>
+        <h3>Pharmacy</h3>
+        <ul>
+          <li>View incoming prescriptions</li>
+          <li>Mark medicines as dispensed</li>
+          <li>Track dispensing history</li>
+          <li>Medicine demand forecasting (AI)</li>
+        </ul>
+      </div>
+      <div class="role-card r-lab">
+        <div class="role-icon">🔬</div>
+        <h3>Laboratory</h3>
+        <ul>
+          <li>Receive & prioritise test requests</li>
+          <li>Assign technicians; track samples</li>
+          <li>Auto-flag abnormal results</li>
+          <li>Upload PDF reports</li>
+          <li>Notify doctor & patient on completion</li>
+        </ul>
+      </div>
+      <div class="role-card r-admin">
+        <div class="role-icon">🔐</div>
+        <h3>Admin</h3>
+        <ul>
+          <li>Create & manage all user accounts</li>
+          <li>Department configuration & RBAC</li>
+          <li>System-wide analytics dashboard</li>
+          <li>Audit log & security alerting</li>
+          <li>Hospital configuration (fees, hours, branches)</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════ CLINICAL WORKFLOW TABLE ═══════════ -->
+  <section>
+    <div class="section-header">
+      <div class="section-icon" style="background:linear-gradient(135deg,#ff6b6b,#feca57)">📋</div>
+      <div>
+        <div class="section-title">Clinical Workflow Process</div>
+        <div class="section-sub">Step-by-step patient journey through the system</div>
+      </div>
+    </div>
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;">
+      <table class="workflow-table">
+        <thead>
+          <tr>
+            <th style="width:90px">Step</th>
+            <th>Actor</th>
+            <th>Action</th>
+            <th>System Output</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="step-badge">Step 1</span></td>
+            <td>Admin</td>
+            <td>Creates user accounts for doctors, staff, pharmacists, lab technicians, and patients</td>
+            <td>Accounts stored in <code>users</code> collection with hashed passwords; role assigned</td>
+          </tr>
+          <tr>
+            <td><span class="step-badge">Step 2</span></td>
+            <td>Patient / Staff</td>
+            <td>Patient books an appointment online OR Staff books on behalf of a walk-in patient</td>
+            <td>Appointment record created; doctor notified; token generated for walk-ins</td>
+          </tr>
+          <tr>
+            <td><span class="step-badge">Step 3</span></td>
+            <td>Staff</td>
+            <td>Adds patient to daily OPD queue and manages token status</td>
+            <td>Queue entry created/updated; real-time status visible on staff dashboard</td>
+          </tr>
+          <tr>
+            <td><span class="step-badge">Step 4</span></td>
+            <td>Doctor</td>
+            <td>Views patient EMR, records consultation, creates digital prescription, orders lab tests</td>
+            <td>Prescription saved to DB; LabTest records created with priority & status "Requested"</td>
+          </tr>
+          <tr>
+            <td><span class="step-badge">Step 5</span></td>
+            <td>Pharmacist</td>
+            <td>Views prescription on pharmacy dashboard, dispenses medicines, marks as dispensed</td>
+            <td>Prescription status updated to "dispensed"; dispensing history recorded</td>
+          </tr>
+          <tr>
+            <td><span class="step-badge">Step 6</span></td>
+            <td>Lab Technician</td>
+            <td>Collects sample → processes test → uploads PDF report with structured results</td>
+            <td>LabTest status progresses (sample-collected → in-progress → completed); auto-flagging of abnormal results; notifications sent to doctor &amp; patient</td>
+          </tr>
+          <tr>
+            <td><span class="step-badge">Step 7</span></td>
+            <td>Patient</td>
+            <td>Logs in to view prescriptions and download lab reports</td>
+            <td>Patient dashboard shows all records; PDF download available</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ═══════════ API ENDPOINTS ═══════════ -->
+  <section>
+    <div class="section-header">
+      <div class="section-icon" style="background:linear-gradient(135deg,#4facfe,#00f2fe)">📡</div>
+      <div>
+        <div class="section-title">REST API Endpoints</div>
+        <div class="section-sub">Base URL: <code>http://localhost:5000/api</code></div>
+      </div>
+    </div>
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:28px;" class="api-section">
+      <div class="api-group">
+        <h4>🔒 Authentication</h4>
+        <table class="api-table"><thead><tr><th>Method</th><th>Endpoint</th><th>Description</th></tr></thead>
+        <tbody>
+          <tr><td><span class="method post">POST</span></td><td><code>/auth/login</code></td><td>User login, returns JWT token</td></tr>
+          <tr><td><span class="method get">GET</span></td><td><code>/auth/me</code></td><td>Get current authenticated user</td></tr>
+        </tbody></table>
+      </div>
+      <div class="api-group">
+        <h4>🔐 Admin</h4>
+        <table class="api-table"><thead><tr><th>Method</th><th>Endpoint</th><th>Description</th></tr></thead>
+        <tbody>
+          <tr><td><span class="method post">POST</span></td><td><code>/admin/users</code></td><td>Create new user</td></tr>
+          <tr><td><span class="method get">GET</span></td><td><code>/admin/users?role=doctor</code></td><td>Get users filtered by role/status</td></tr>
+          <tr><td><span class="method put">PUT</span></td><td><code>/admin/users/:id/approve</code></td><td>Approve user account</td></tr>
+          <tr><td><span class="method put">PUT</span></td><td><code>/admin/users/:id/block</code></td><td>Block / suspend user</td></tr>
+          <tr><td><span class="method get">GET</span></td><td><code>/admin/analytics/dashboard</code></td><td>System overview metrics</td></tr>
+          <tr><td><span class="method get">GET</span></td><td><code>/admin/analytics/revenue-by-department</code></td><td>Revenue breakdown</td></tr>
+          <tr><td><span class="method get">GET</span></td><td><code>/admin/audit-logs</code></td><td>Audit activity logs</td></tr>
+          <tr><td><span class="method get">GET</span></td><td><code>/admin/config</code></td><td>Hospital configuration</td></tr>
+          <tr><td><span class="method put">PUT</span></td><td><code>/admin/config</code></td><td>Update hospital configuration</td></tr>
+        </tbody></table>
+      </div>
+      <div class="api-group">
+        <h4>🧑‍⚕️ Patient</h4>
+        <table class="api-table"><thead><tr><th>Method</th><th>Endpoint</th><th>Description</th></tr></thead>
+        <tbody>
+          <tr><td><span class="method get">GET</span></td><td><code>/patient/appointments</code></td><td>Get patient appointments</td></tr>
+          <tr><td><span class="method post">POST</span></td><td><code>/patient/appointments</code></td><td>Book appointment</td></tr>
+          <tr><td><span class="method get">GET</span></td><td><code>/patient/prescriptions</code></td><td>Get prescriptions</td></tr>
+          <tr><td><span class="method get">GET</span></td><td><code>/patient/lab-reports</code></td><td>Get lab test reports</td></tr>
+        </tbody></table>
+      </div>
+      <div class="api-group">
+        <h4>👨‍⚕️ Doctor</h4>
+        <table class="api-table"><thead><tr><th>Method</th><th>Endpoint</th><th>Description</th></tr></thead>
+        <tbody>
+          <tr><td><span class="method get">GET</span></td><td><code>/doctor/appointments</code></td><td>View today's appointments</td></tr>
+          <tr><td><span class="method get">GET</span></td><td><code>/doctor/patient/:id</code></td><td>Get full patient EMR</td></tr>
+          <tr><td><span class="method post">POST</span></td><td><code>/doctor/prescription</code></td><td>Create prescription</td></tr>
+          <tr><td><span class="method post">POST</span></td><td><code>/doctor/lab-request</code></td><td>Request lab test</td></tr>
+        </tbody></table>
+      </div>
+      <div class="api-group">
+        <h4>👥 Staff</h4>
+        <table class="api-table"><thead><tr><th>Method</th><th>Endpoint</th><th>Description</th></tr></thead>
+        <tbody>
+          <tr><td><span class="method get">GET</span></td><td><code>/staff/queue</code></td><td>Get daily OPD queue</td></tr>
+          <tr><td><span class="method post">POST</span></td><td><code>/staff/queue</code></td><td>Add patient to queue</td></tr>
+          <tr><td><span class="method put">PUT</span></td><td><code>/staff/queue/:id</code></td><td>Update queue token status</td></tr>
+          <tr><td><span class="method post">POST</span></td><td><code>/staff/appointment</code></td><td>Book walk-in appointment</td></tr>
+        </tbody></table>
+      </div>
+      <div class="api-group">
+        <h4>💊 Pharmacy</h4>
+        <table class="api-table"><thead><tr><th>Method</th><th>Endpoint</th><th>Description</th></tr></thead>
+        <tbody>
+          <tr><td><span class="method get">GET</span></td><td><code>/pharmacy/prescriptions</code></td><td>Get pending prescriptions</td></tr>
+          <tr><td><span class="method put">PUT</span></td><td><code>/pharmacy/dispense/:id</code></td><td>Mark prescription as dispensed</td></tr>
+        </tbody></table>
+      </div>
+      <div class="api-group">
+        <h4>🔬 Laboratory</h4>
+        <table class="api-table"><thead><tr><th>Method</th><th>Endpoint</th><th>Description</th></tr></thead>
+        <tbody>
+          <tr><td><span class="method get">GET</span></td><td><code>/laboratory/requests</code></td><td>Get lab test requests</td></tr>
+          <tr><td><span class="method put">PUT</span></td><td><code>/laboratory/requests/:id/status</code></td><td>Update test status</td></tr>
+          <tr><td><span class="method post">POST</span></td><td><code>/laboratory/requests/:id/report</code></td><td>Upload results & PDF report</td></tr>
+          <tr><td><span class="method get">GET</span></td><td><code>/laboratory/analytics/turnaround-time</code></td><td>TAT analytics</td></tr>
+          <tr><td><span class="method get">GET</span></td><td><code>/laboratory/analytics/abnormal-results</code></td><td>Abnormal result report</td></tr>
+        </tbody></table>
+      </div>
+      <div class="api-group">
+        <h4>🤖 AI Endpoints</h4>
+        <table class="api-table"><thead><tr><th>Method</th><th>Endpoint</th><th>Description</th></tr></thead>
+        <tbody>
+          <tr><td><span class="method post">POST</span></td><td><code>/ai/appointment-suggestion</code></td><td>Smart slot recommendation</td></tr>
+          <tr><td><span class="method get">GET</span></td><td><code>/ai/disease-patterns</code></td><td>Disease trend analysis</td></tr>
+          <tr><td><span class="method get">GET</span></td><td><code>/ai/patient-risk/:id</code></td><td>Patient risk score</td></tr>
+          <tr><td><span class="method get">GET</span></td><td><code>/ai/workload-balancing</code></td><td>Doctor workload analysis</td></tr>
+          <tr><td><span class="method get">GET</span></td><td><code>/ai/peak-hours</code></td><td>Peak hour prediction</td></tr>
+        </tbody></table>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════ SECURITY & AI ═══════════ -->
+  <section>
+    <div class="section-header">
+      <div class="section-icon" style="background:linear-gradient(135deg,#a18cd1,#fbc2eb)">🛡️</div>
+      <div>
+        <div class="section-title">Security Architecture & AI Features</div>
+        <div class="section-sub">Enterprise-grade protection and intelligent analytics</div>
+      </div>
+    </div>
+    <div class="feat-grid">
+      <div class="feat-card"><div class="f-icon">🔑</div><h5>JWT Authentication</h5><p>Stateless token-based auth; token expiry handling and verification middleware.</p></div>
+      <div class="feat-card"><div class="f-icon">👮</div><h5>Role-Based Access Control</h5><p>Route and function-level authorization via <code>authorize()</code> middleware.</p></div>
+      <div class="feat-card"><div class="f-icon">🔒</div><h5>bcrypt Hashing</h5><p>Pre-save password hashing with 10 salt rounds; plain-text passwords never stored.</p></div>
+      <div class="feat-card"><div class="f-icon">🧹</div><h5>Input Sanitization</h5><p>XSS prevention, HTML encoding, and SQL-injection guard via Mongoose.</p></div>
+      <div class="feat-card"><div class="f-icon">📜</div><h5>Access Logging</h5><p>All authenticated requests logged with IP, user-agent, method, and duration.</p></div>
+      <div class="feat-card"><div class="f-icon">🚨</div><h5>Security Monitoring</h5><p>Failed login lockout after 5 attempts; unusual traffic (&gt;100 req/min) detection.</p></div>
+      <div class="feat-card"><div class="f-icon">📱</div><h5>QR Digital Signatures</h5><p>QR code verification for prescription authenticity and shareable link validation.</p></div>
+      <div class="feat-card"><div class="f-icon">📊</div><h5>AI – Smart Slots</h5><p>Analyses last 30 days of appointments; recommends top-3 optimal time slots.</p></div>
+      <div class="feat-card"><div class="f-icon">🦠</div><h5>AI – Disease Patterns</h5><p>Tracks disease frequency, age group and gender distribution for public health.</p></div>
+      <div class="feat-card"><div class="f-icon">⚠️</div><h5>AI – Patient Risk Score</h5><p>Scoring model based on age, chronic conditions, allergies, and appointment frequency.</p></div>
+      <div class="feat-card"><div class="f-icon">⚖️</div><h5>AI – Workload Balancing</h5><p>Classifies doctors as overloaded/balanced/underutilized; provides redistribution tips.</p></div>
+      <div class="feat-card"><div class="f-icon">📈</div><h5>AI – Peak Hours</h5><p>Hourly and daily appointment distribution for staff scheduling and resource planning.</p></div>
+    </div>
+  </section>
+
+  <!-- ═══════════ DATABASE MODELS ═══════════ -->
+  <section>
+    <div class="section-header">
+      <div class="section-icon" style="background:linear-gradient(135deg,#43e97b,#38f9d7)">🗄️</div>
+      <div>
+        <div class="section-title">Database Models</div>
+        <div class="section-sub">MongoDB collections managed via Mongoose</div>
+      </div>
+    </div>
+    <div class="tech-grid">
+      <div class="tech-card"><div class="icon">👤</div><h4>User</h4><p>Auth credentials, role, status</p></div>
+      <div class="tech-card"><div class="icon">🧑</div><h4>Patient</h4><p>Demographics, medical history, chronic conditions</p></div>
+      <div class="tech-card"><div class="icon">👨‍⚕️</div><h4>Doctor</h4><p>Specialization, availability, default schedule</p></div>
+      <div class="tech-card"><div class="icon">📅</div><h4>Appointment</h4><p>Booking details, status, type (online/walk-in)</p></div>
+      <div class="tech-card"><div class="icon">🔢</div><h4>Queue</h4><p>Daily OPD tokens, status, timestamps</p></div>
+      <div class="tech-card"><div class="icon">💊</div><h4>Prescription</h4><p>Medicines, dosage, frequency, QR code</p></div>
+      <div class="tech-card"><div class="icon">🔬</div><h4>LabTest</h4><p>Priority, status workflow, results, auto-flagging, PDF</p></div>
+      <div class="tech-card"><div class="icon">🏥</div><h4>Department</h4><p>Doctors, staff, performance metrics, location</p></div>
+      <div class="tech-card"><div class="icon">📝</div><h4>AuditLog</h4><p>All system actions, severity, IP, metadata</p></div>
+      <div class="tech-card"><div class="icon">⚙️</div><h4>HospitalConfig</h4><p>Fees, working hours, security settings, branches</p></div>
+    </div>
+  </section>
+
+  <!-- ═══════════ FUTURE ENHANCEMENTS ═══════════ -->
+  <section>
+    <div class="section-header">
+      <div class="section-icon" style="background:linear-gradient(135deg,#6c63ff,#48dbfb)">🚀</div>
+      <div>
+        <div class="section-title">Future Enhancements</div>
+        <div class="section-sub">Planned features for the next release</div>
+      </div>
+    </div>
+    <div class="feat-grid">
+      <div class="feat-card"><div class="f-icon">🔔</div><h5>Real-time Notifications</h5><p>Socket.io-based live updates for appointments, lab results, and queue changes.</p></div>
+      <div class="feat-card"><div class="f-icon">⏰</div><h5>Appointment Reminders</h5><p>SMS / email reminders automatically sent before scheduled appointments.</p></div>
+      <div class="feat-card"><div class="f-icon">📦</div><h5>Inventory Management</h5><p>Medicine stock tracking, expiry alerts, and automated reorder triggers.</p></div>
+      <div class="feat-card"><div class="f-icon">💳</div><h5>Billing & Payments</h5><p>Integrated billing system with online payment gateway support.</p></div>
+      <div class="feat-card"><div class="f-icon">📅</div><h5>Medical Timeline</h5><p>Visual chronological view of a patient's complete medical history.</p></div>
+      <div class="feat-card"><div class="f-icon">📊</div><h5>Report Analytics</h5><p>Advanced data visualizations and exportable analytics dashboards.</p></div>
+    </div>
+  </section>
+
+</div>
+
+<!-- ═══════════ FOOTER ═══════════ -->
+<div class="footer" style="margin-top:60px;">
+  <p>Built with <span>❤️</span> using the MERN Stack &nbsp;·&nbsp; CareFusion Hospital Management System &nbsp;·&nbsp; 2026</p>
+  <p style="margin-top:6px; font-size:.75rem;">Node.js · Express.js · React 18 · MongoDB · JWT · Typesense · Docker</p>
+</div>
+
+<script>
+  mermaid.initialize({
+    startOnLoad: true,
+    theme: 'dark',
+    themeVariables: {
+      primaryColor: '#1e2a4a',
+      primaryTextColor: '#e8eaf6',
+      primaryBorderColor: '#6c63ff',
+      lineColor: '#6c63ff',
+      secondaryColor: '#162040',
+      tertiaryColor: '#0f1117',
+      edgeLabelBackground: '#1a1d2e',
+      clusterBkg: '#141828',
+      clusterBorder: '#2e3155',
+      titleColor: '#e8eaf6',
+      fontFamily: 'Inter, sans-serif',
+      fontSize: '14px'
+    },
+    flowchart: {
+      curve: 'basis',
+      htmlLabels: true,
+      padding: 20
+    }
+  });
+</script>
+</body>
+</html>

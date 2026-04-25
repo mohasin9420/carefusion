@@ -1,0 +1,824 @@
+.dashboard-layout {
+    display: flex;
+    min-height: calc(100vh - 80px);
+}
+
+.dashboard-main {
+    flex: 1;
+    padding: 2.5rem;
+    background: var(--bg-app);
+    overflow-y: auto;
+    animation: fadeIn 0.4s ease-out;
+}
+
+
+@media (max-width: 768px) {
+    .dashboard-layout {
+        display: block;
+    }
+    
+    .dashboard-main {
+        padding: 1rem;
+    }
+
+    .prescription-header, .lab-reports-header, .medical-ledger-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+    }
+
+    .prescription-search, .lab-search-box {
+        width: 100% !important;
+    }
+
+    /* Mobile Utility Classes */
+    .mobile-stack {
+        flex-direction: column !important;
+        align-items: stretch !important;
+    }
+
+    .mobile-hide {
+        display: none !important;
+    }
+
+    .mobile-full-width {
+        width: 100% !important;
+    }
+}
+
+.text-capitalize {
+    text-transform: capitalize;
+}
+
+.prescription-search {
+    position: relative;
+    width: 300px;
+}
+
+.prescription-search input, .lab-search-box input {
+    width: 100%;
+    padding: 0.75rem 1rem 0.75rem 2.5rem;
+    border-radius: 12px;
+    border: 1px solid #e2e8f0;
+    font-size: 0.9rem;
+    background: white;
+}
+
+.prescription-search-icon, .lab-search-icon {
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #94a3b8;
+}
+
+.rx-card {
+    background: white;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    border: 1px solid var(--slate-100);
+    box-shadow: var(--shadow-md);
+    margin-bottom: 2rem;
+    display: flex;
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    position: relative;
+    animation: slideUp 0.5s ease-out;
+}
+
+.rx-card:hover {
+    transform: translateY(-8px);
+    box-shadow: var(--shadow-premium);
+    border-color: var(--primary-light);
+}
+
+.rx-status-strip {
+    width: 6px;
+    background: #cbd5e1;
+}
+
+.rx-status-strip.pending { background: #f59e0b; }
+.rx-status-strip.ready { 
+    background: #3b82f6; 
+    animation: rx-pulse 2s infinite;
+}
+.rx-status-strip.dispensed { background: #10b981; }
+
+@keyframes rx-pulse {
+    0% { opacity: 1; }
+    50% { opacity: 0.6; }
+    100% { opacity: 1; }
+}
+
+.rx-body {
+    flex: 1;
+    padding: 1.5rem;
+}
+
+.rx-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1.25rem;
+}
+
+.rx-doctor-info {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.rx-doctor-avatar {
+    width: 48px;
+    height: 48px;
+    background: #eff6ff;
+    color: #2563eb;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+}
+
+.rx-doctor-name {
+    font-weight: 700;
+    color: #1e293b;
+    margin: 0;
+}
+
+.rx-specialization {
+    font-size: 0.8rem;
+    color: #64748b;
+    margin: 0;
+}
+
+.rx-id-badge {
+    font-size: 0.75rem;
+    background: #f8fafc;
+    color: #64748b;
+    padding: 4px 10px;
+    border-radius: 8px;
+    font-family: monospace;
+}
+
+.rx-diagnosis-box {
+    background: #f8fafc;
+    padding: 1rem;
+    border-radius: 12px;
+    margin-bottom: 1.5rem;
+}
+
+.rx-diagnosis-label {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #94a3b8;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+    display: block;
+}
+
+.rx-diagnosis {
+    color: #334155;
+    font-weight: 500;
+}
+
+.rx-med-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 1.5rem;
+}
+
+.rx-med-table th {
+    text-align: left;
+    font-size: 0.75rem;
+    color: #94a3b8;
+    text-transform: uppercase;
+    padding-bottom: 8px;
+}
+
+.rx-med-table td {
+    padding: 8px 0;
+    border-bottom: 1px solid #f1f5f9;
+    color: #1e293b;
+    font-size: 0.9rem;
+}
+
+.rx-med-name {
+    font-weight: 600;
+}
+
+.rx-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 1rem;
+    border-top: 1px solid #f1f5f9;
+}
+
+.rx-date {
+    font-size: 0.85rem;
+    color: #64748b;
+}
+
+.rx-actions {
+    display: flex;
+    gap: 0.75rem;
+}
+
+.rx-for-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+.rx-for-self { background: #f1f5f9; color: #475569; }
+.rx-for-member { background: #f5f3ff; color: #7c3aed; }
+
+/* Lab Report Ledger Styles */
+.lab-reports-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+.lab-ledger-card {
+    background: white;
+    border-radius: var(--radius-xl);
+    padding: 1.5rem;
+    box-shadow: var(--shadow-lg);
+    border: 1px solid var(--slate-100);
+}
+
+.lab-ledger-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0 0.5rem;
+}
+
+.lab-ledger-table th {
+    padding: 1rem 1.5rem;
+    text-align: left;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #94a3b8;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    border-bottom: 1px solid #f1f5f9;
+}
+
+.lab-ledger-row {
+    transition: all 0.2s;
+    background: white;
+}
+
+.lab-ledger-row:hover {
+    background: #f8fafc;
+    transform: scale(1.005);
+}
+
+.lab-ledger-row.is-disputed {
+    background: #fff1f2;
+}
+
+.lab-ledger-row.is-disputed:hover {
+    background: #ffe4e6;
+}
+
+.lab-ledger-row td {
+    padding: 1.25rem 1.5rem;
+    font-size: 0.95rem;
+    color: #1e293b;
+    border-top: 1px solid transparent;
+    border-bottom: 1px solid #f8fafc;
+}
+
+.lab-test-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.lab-test-name {
+    font-weight: 700;
+    color: #0f172a;
+}
+
+.lab-test-category {
+    font-size: 0.75rem;
+    color: #64748b;
+}
+
+.lab-status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.lab-status-completed { background: #dcfce7; color: #166534; }
+.lab-status-pending { background: #fef9c3; color: #854d0e; }
+.lab-status-in-progress { background: #dbeafe; color: #1e40af; }
+
+.lab-dispute-indicator {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    color: #e11d48;
+    font-size: 0.75rem;
+    font-weight: 700;
+}
+
+.lab-view-btn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: #eff6ff;
+    color: #2563eb;
+    padding: 8px 16px;
+    border-radius: 12px;
+    font-weight: 600;
+    font-size: 0.85rem;
+    transition: all 0.2s;
+    text-decoration: none;
+}
+
+.lab-view-btn:hover {
+    background: #2563eb;
+    color: white;
+}
+
+.lab-dispute-btn {
+    background: #fff;
+    border: 1px solid #fecaca;
+    color: #dc2626;
+    padding: 8px 12px;
+    border-radius: 10px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.lab-dispute-btn:hover {
+    background: #ef4444;
+    color: white;
+    border-color: #ef4444;
+}
+
+.lab-resolved-badge {
+    color: #059669;
+    font-weight: 700;
+    font-size: 0.75rem;
+}
+
+@media (max-width: 1024px) {
+    .lab-ledger-table {
+        display: block;
+        overflow-x: auto;
+    }
+}
+
+/* Insurance Document Ledger */
+.insurance-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+    gap: 2rem;
+}
+
+.claim-card {
+    background: white;
+    border-radius: 20px;
+    padding: 1.5rem;
+    border: 1px solid #f1f5f9;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.claim-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+}
+
+.claim-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.provider-name {
+    color: #1e40af;
+    font-weight: 800;
+    font-size: 1.25rem;
+    margin: 0;
+}
+
+.claim-ref {
+    font-size: 0.75rem;
+    color: #94a3b8;
+    font-family: monospace;
+}
+
+.claim-info-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    background: #f8fafc;
+    padding: 1rem;
+    border-radius: 12px;
+}
+
+.claim-info-item {
+    display: flex;
+    flex-direction: column;
+}
+
+.claim-info-label {
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: #94a3b8;
+    text-transform: uppercase;
+}
+
+.claim-info-value {
+    font-size: 0.9rem;
+    color: #1e293b;
+    font-weight: 600;
+}
+
+/* Profile Dashboard Styles */
+.profile-dashboard {
+    display: grid;
+    grid-template-columns: 310px 1fr;
+    gap: 2rem;
+}
+
+.profile-sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.profile-avatar-card {
+    background: white;
+    border-radius: 24px;
+    padding: 2rem;
+    text-align: center;
+    border: 1px solid #f1f5f9;
+}
+
+.profile-avatar-large {
+    width: 120px;
+    height: 120px;
+    background: linear-gradient(135deg, #eff6ff, #dbeafe);
+    color: #2563eb;
+    border-radius: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 3rem;
+    margin: 0 auto 1.5rem;
+    font-weight: 700;
+    border: 4px solid #fff;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+}
+
+.profile-content-card {
+    background: white;
+    border-radius: 24px;
+    padding: 2.5rem;
+    border: 1px solid #f1f5f9;
+    box-shadow: 0 4px 20px -5px rgba(0,0,0,0.03);
+}
+
+.profile-section-title {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #94a3b8;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 2rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid #f1f5f9;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.profile-data-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2.5rem;
+}
+
+.profile-field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+}
+
+.profile-label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #64748b;
+}
+
+.profile-value {
+    font-size: 1rem;
+    color: #0f172a;
+    font-weight: 600;
+    padding: 0.5rem 0;
+}
+
+@media (max-width: 900px) {
+    .insurance-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .profile-dashboard {
+        grid-template-columns: 1fr;
+    }
+    
+    .profile-data-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* --- Role-Specific Dashboard Accents --- */
+.dashboard-doctor { --role-accent: var(--doctor-color); --role-light: var(--doctor-light); }
+.dashboard-staff { --role-accent: var(--staff-color); --role-light: var(--staff-light); }
+.dashboard-pharmacy { --role-accent: var(--pharmacy-color); --role-light: var(--pharmacy-light); }
+.dashboard-lab { --role-accent: var(--lab-color); --role-light: var(--lab-light); }
+.dashboard-admin { --role-accent: var(--admin-color); --role-light: var(--admin-light); }
+
+/* --- Global Modern Stat Cards --- */
+.modern-stat-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2.5rem;
+}
+
+.modern-stat-card {
+    background: white;
+    border-radius: 20px;
+    padding: 1.5rem;
+    border: 1px solid #f1f5f9;
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+    transition: all 0.3s ease;
+}
+
+.modern-stat-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 20px -5px rgba(0, 0, 0, 0.05);
+    border-color: var(--role-accent, #e2e8f0);
+}
+
+.stat-icon-wrapper {
+    width: 56px;
+    height: 56px;
+    border-radius: 16px;
+    background: var(--role-light, #f8fafc);
+    color: var(--role-accent, #64748b);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+}
+
+.stat-info h3 {
+    font-size: 0.85rem;
+    color: #64748b;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin: 0 0 4px;
+}
+
+.stat-info .stat-value {
+    font-size: 1.75rem;
+    font-weight: 800;
+    color: #0f172a;
+    line-height: 1.2;
+}
+
+/* --- Global Medical Ledger (Tables) --- */
+.medical-ledger-container {
+    background: white;
+    border-radius: 24px;
+    border: 1px solid #f1f5f9;
+    overflow: hidden;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.03);
+    margin-bottom: 2.5rem;
+}
+
+.medical-ledger-header {
+    padding: 1.5rem 2rem;
+    border-bottom: 1px solid #f1f5f9;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.medical-ledger-header h3 {
+    margin: 0;
+    font-size: 1.35rem;
+    color: #0f172a;
+    font-weight: 700;
+}
+
+.medical-ledger-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.medical-ledger-table th {
+    background: #f8fafc;
+    padding: 1rem 1.5rem;
+    text-align: left;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #64748b;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.medical-ledger-table td {
+    padding: 1.25rem 1.5rem;
+    border-bottom: 1px solid #f8fafc;
+    font-size: 0.95rem;
+    color: #334155;
+    vertical-align: middle;
+}
+
+.medical-ledger-table tr:last-child td { border-bottom: none; }
+
+.medical-ledger-table tr:hover td {
+    background: #f1f5f9;
+}
+
+/* Tablet/Mobile Table Wrapping */
+@media (max-width: 1024px) {
+    .table-responsive {
+        width: 100%;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+    
+    .medical-ledger-table {
+        min-width: 800px; /* Force scroll instead of squishing */
+    }
+}
+
+/* --- Global Modern Badges --- */
+.m-badge {
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    text-transform: capitalize;
+}
+
+.m-badge-blue { background: #dbeafe; color: #1e40af; }
+.m-badge-green { background: #dcfce7; color: #166534; }
+.m-badge-yellow { background: #fef9c3; color: #854d0e; }
+.m-badge-red { background: #fee2e2; color: #991b1b; }
+.m-badge-purple { background: #f3e8ff; color: #6b21a8; }
+.m-badge-gray { background: #f1f5f9; color: #475569; }
+
+/* --- Global Action Tiles --- */
+.action-tile-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem;
+}
+
+.action-tile {
+    background: white;
+    border-radius: 20px;
+    padding: 2rem;
+    border: 1px solid #f1f5f9;
+    text-align: left;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+    text-decoration: none;
+    display: block;
+}
+
+.action-tile:hover {
+    transform: translateY(-5px);
+    border-color: var(--role-accent);
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+}
+
+.action-tile .tile-icon {
+    font-size: 2.5rem;
+    margin-bottom: 1.5rem;
+    display: block;
+}
+
+.action-tile h3 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #0f172a;
+    margin: 0 0 0.5rem;
+}
+
+.action-tile p {
+    font-size: 0.9rem;
+    color: #64748b;
+    line-height: 1.5;
+    margin: 0;
+}
+
+
+/* --- Doctor Timeline Styles --- */
+.appointments-timeline-modern {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    position: relative;
+}
+
+.appointments-timeline-modern::before {
+    content: '';
+    position: absolute;
+    left: 110px;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: #f1f5f9;
+}
+
+.timeline-item-premium {
+    display: grid;
+    grid-template-columns: 80px 1fr;
+    gap: 2rem;
+    position: relative;
+}
+
+.timeline-time-col {
+    padding-top: 1rem;
+    text-align: right;
+}
+
+.timeline-time-col .time-badge {
+    font-size: 1rem;
+    font-weight: 800;
+    color: #0f172a;
+}
+
+.timeline-card-content {
+    margin: 0 !important;
+    border-left: 4px solid #e2e8f0;
+    transition: all 0.3s ease;
+}
+
+.timeline-item-premium.in-progress .timeline-card-content { border-left-color: #f59e0b; }
+.timeline-item-premium.completed .timeline-card-content { border-left-color: #10b981; }
+.timeline-item-premium.scheduled .timeline-card-content { border-left-color: #2563eb; }
+
+.timeline-item-premium::after {
+    content: '';
+    position: absolute;
+    left: 106px;
+    top: 1.4rem;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: white;
+    border: 2px solid #cbd5e1;
+    z-index: 2;
+}
+
+.timeline-item-premium.in-progress::after { border-color: #f59e0b; background: #f59e0b; }
+.timeline-item-premium.completed::after { border-color: #10b981; background: #10b981; }
+.timeline-item-premium.scheduled::after { border-color: #2563eb; background: #2563eb; }
+
+.patient-quick-stats {
+    background: #f8fafc;
+    padding: 1rem;
+    border-radius: 12px;
+}
+
+@media (max-width: 768px) {
+    .appointments-timeline-modern::before { display: none; }
+    .timeline-item-premium { 
+        grid-template-columns: 1fr;
+        gap: 0.5rem;
+    }
+    .timeline-time-col { text-align: left; padding-bottom: 0.5rem; }
+    .timeline-item-premium::after { display: none; }
+}

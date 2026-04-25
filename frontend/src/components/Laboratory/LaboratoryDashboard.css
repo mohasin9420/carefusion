@@ -1,0 +1,729 @@
+/* ═══════════════════════════════════════════════
+   Laboratory Dashboard CSS
+═══════════════════════════════════════════════ */
+
+/* ── Table ── */
+.lab-table {
+    min-width: 900px;
+}
+
+.lab-table th {
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: #64748b;
+    padding: 0.75rem 1rem;
+    background: #f8fafc;
+    border-bottom: 2px solid #e2e8f0;
+    white-space: nowrap;
+}
+
+.lab-table td {
+    padding: 0.875rem 1rem;
+    border-bottom: 1px solid #f1f5f9;
+    vertical-align: middle;
+}
+
+.lab-table tr:last-child td {
+    border-bottom: none;
+}
+
+.lab-table tr:hover td {
+    background: #fafbff;
+}
+
+.lab-row-dispute td {
+    background: #fff7ed !important;
+}
+
+.lab-test-name {
+    font-weight: 600;
+    color: #1e293b;
+    font-size: 0.9rem;
+}
+
+.lab-test-category {
+    font-size: 0.75rem;
+    color: #94a3b8;
+    margin-top: 0.15rem;
+    text-transform: capitalize;
+}
+
+.lab-patient-name {
+    font-weight: 600;
+    color: #334155;
+    font-size: 0.9rem;
+}
+
+.lab-patient-mobile {
+    font-size: 0.75rem;
+    color: #94a3b8;
+    margin-top: 0.1rem;
+}
+
+.lab-payment {
+    font-weight: 700;
+    color: #059669;
+    font-size: 0.9rem;
+}
+
+.lab-report-cell {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    align-items: flex-start;
+}
+
+.lab-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+    align-items: center;
+}
+
+/* ── Dispute / Resolved Badges ── */
+.lab-dispute-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    padding: 0.2rem 0.6rem;
+    border-radius: 999px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    cursor: pointer;
+    border: none;
+    background: #fef3c7;
+    color: #b45309;
+    border: 1.5px solid #f59e0b;
+    animation: pulse-badge 2s infinite;
+    white-space: nowrap;
+    transition: transform 0.15s;
+}
+
+.lab-dispute-badge:hover {
+    transform: scale(1.05);
+    background: #fde68a;
+}
+
+.lab-resolved-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    padding: 0.2rem 0.6rem;
+    border-radius: 999px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    cursor: pointer;
+    border: 1.5px solid #10b981;
+    background: #d1fae5;
+    color: #065f46;
+    white-space: nowrap;
+    transition: transform 0.15s;
+}
+
+.lab-resolved-badge:hover {
+    transform: scale(1.05);
+}
+
+@keyframes pulse-badge {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.4); }
+    50% { box-shadow: 0 0 0 5px rgba(245, 158, 11, 0); }
+}
+
+/* ═══════════════════════════════════════════════
+   Modal
+═══════════════════════════════════════════════ */
+.lab-modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(15, 23, 42, 0.55);
+    backdrop-filter: blur(4px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    padding: 1rem;
+    animation: fade-in 0.2s ease;
+}
+
+@keyframes fade-in {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.lab-modal {
+    background: #fff;
+    border-radius: 1rem;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.35);
+    width: 100%;
+    max-width: 520px;
+    animation: slide-up 0.25s ease;
+    overflow: hidden;
+}
+
+.lab-modal-sm {
+    max-width: 440px;
+}
+
+@keyframes slide-up {
+    from { transform: translateY(30px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+.lab-modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.25rem 1.5rem;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+}
+
+.lab-modal-header-warning {
+    background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+}
+
+.lab-modal-header h2 {
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin: 0;
+    color: white;
+}
+
+.lab-modal-close {
+    background: rgba(255,255,255,0.2);
+    border: none;
+    color: white;
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s;
+    flex-shrink: 0;
+}
+
+.lab-modal-close:hover {
+    background: rgba(255,255,255,0.35);
+}
+
+.lab-modal-body {
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.lab-modal-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.75rem;
+    margin-top: 0.5rem;
+    padding-top: 1rem;
+    border-top: 1px solid #f1f5f9;
+}
+
+/* ── Info group ── */
+.lab-info-group {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+    background: #f8fafc;
+    border-radius: 0.5rem;
+    padding: 1rem;
+    border: 1px solid #e2e8f0;
+}
+
+.lab-info-label {
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #94a3b8;
+    margin-bottom: 0.25rem;
+    display: block;
+}
+
+.lab-info-value {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #1e293b;
+}
+
+/* ── Replace notice ── */
+.lab-replace-notice {
+    background: #fffbeb;
+    border: 1px solid #fcd34d;
+    border-radius: 0.5rem;
+    padding: 0.6rem 0.9rem;
+    font-size: 0.83rem;
+    color: #92400e;
+}
+
+/* ── Form elements ── */
+.lab-form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+}
+
+.lab-form-label {
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: #374151;
+}
+
+.lab-form-label .required {
+    color: #ef4444;
+    margin-left: 2px;
+}
+
+.lab-form-input {
+    width: 100%;
+    padding: 0.6rem 0.85rem;
+    border: 1.5px solid #e2e8f0;
+    border-radius: 0.5rem;
+    font-size: 0.9rem;
+    background: #fff;
+    color: #1e293b;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    box-sizing: border-box;
+}
+
+.lab-form-input:focus {
+    outline: none;
+    border-color: #667eea;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.15);
+}
+
+.lab-form-textarea {
+    resize: vertical;
+    min-height: 80px;
+    font-family: inherit;
+}
+
+.lab-form-hint {
+    font-size: 0.75rem;
+    color: #94a3b8;
+}
+
+/* ── File Drop ── */
+.lab-file-drop {
+    border: 2px dashed #cbd5e1;
+    border-radius: 0.65rem;
+    padding: 1.5rem;
+    text-align: center;
+    cursor: pointer;
+    transition: border-color 0.2s, background 0.2s;
+    background: #f8fafc;
+}
+
+.lab-file-drop:hover {
+    border-color: #667eea;
+    background: #f0f0ff;
+}
+
+.lab-file-drop.has-file {
+    border-color: #10b981;
+    background: #f0fdf4;
+}
+
+.lab-file-placeholder p {
+    margin: 0.4rem 0 0.2rem;
+    font-weight: 600;
+    color: #475569;
+    font-size: 0.9rem;
+}
+
+.lab-file-placeholder small {
+    color: #94a3b8;
+    font-size: 0.78rem;
+}
+
+.lab-upload-icon {
+    font-size: 1.8rem;
+    display: block;
+}
+
+.lab-file-selected {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.lab-file-icon {
+    font-size: 1.4rem;
+}
+
+.lab-file-name {
+    font-weight: 600;
+    color: #065f46;
+    font-size: 0.88rem;
+    word-break: break-all;
+}
+
+.lab-file-size {
+    font-size: 0.78rem;
+    color: #94a3b8;
+}
+
+/* ── Modal Error ── */
+.lab-modal-error {
+    background: #fef2f2;
+    border: 1px solid #fecaca;
+    border-radius: 0.5rem;
+    padding: 0.6rem 0.9rem;
+    font-size: 0.85rem;
+    color: #b91c1c;
+}
+
+/* ── Dispute info ── */
+.lab-dispute-info {
+    background: #f8fafc;
+    border-radius: 0.5rem;
+    padding: 0.75rem 1rem;
+    border: 1px solid #e2e8f0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+}
+
+.lab-dispute-row {
+    display: flex;
+    gap: 0.75rem;
+    font-size: 0.85rem;
+}
+
+.lab-dispute-key {
+    font-weight: 700;
+    color: #94a3b8;
+    min-width: 80px;
+}
+
+.lab-dispute-val {
+    color: #1e293b;
+}
+
+.lab-dispute-message {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+}
+
+.lab-dispute-text {
+    background: #fffbeb;
+    border: 1px solid #fcd34d;
+    border-radius: 0.5rem;
+    padding: 0.75rem 1rem;
+    font-size: 0.88rem;
+    color: #78350f;
+    line-height: 1.5;
+}
+
+.lab-resolved-notice {
+    background: #f0fdf4;
+    border: 1px solid #86efac;
+    border-radius: 0.5rem;
+    padding: 0.75rem 1rem;
+    font-size: 0.85rem;
+    color: #166534;
+}
+
+.lab-resolved-notice p {
+    margin: 0.4rem 0 0;
+    color: #15803d;
+}
+
+/* ── Button danger ── */
+.btn-danger {
+    background: #ef4444;
+    color: white;
+    border: none;
+}
+
+.btn-danger:hover {
+    background: #dc2626;
+}
+
+.btn-warning {
+    background: #f59e0b;
+    color: white;
+    border: none;
+}
+
+.btn-warning:hover {
+    background: #d97706;
+}
+
+.btn-success {
+    background: #10b981;
+    color: white;
+    border: none;
+}
+
+.btn-success:hover {
+    background: #059669;
+}
+
+/* ── Financial Home Card ── */
+.lab-financial-card {
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    padding: 1.5rem !important;
+}
+
+.lab-financial-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+.lab-financial-header h3 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #1e293b;
+    margin: 0;
+}
+
+.lab-financial-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+}
+
+.lab-fin-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.lab-fin-label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #64748b;
+}
+
+.lab-fin-value {
+    font-size: 1.75rem;
+    font-weight: 800;
+    color: #334155;
+    line-height: 1;
+}
+
+.lab-fin-value.gold {
+    color: #b45309;
+}
+
+.btn-primary-gradient {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    font-weight: 600;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    font-size: 0.875rem;
+    transition: opacity 0.2s;
+}
+
+.btn-primary-gradient:hover {
+    opacity: 0.9;
+    color: white;
+}
+
+/* ── Home Stat Cards ── */
+.stat-card-blue {
+    border-left: 5px solid #3b82f6 !important;
+}
+.stat-card-green {
+    border-left: 5px solid #10b981 !important;
+}
+
+
+/* ── Patient Raise Issue Button ── */
+.lab-btn-raise {
+    background: linear-gradient(135deg, #ef4444 0%, #b91c1c 100%);
+    color: white;
+    border: none;
+    font-weight: 600;
+    transition: opacity 0.2s, transform 0.15s;
+}
+
+.lab-btn-raise:hover {
+    opacity: 0.9;
+    transform: scale(1.03);
+}
+
+/* ── Patient Dispute Status Badges ── */
+.lab-patient-dispute-badge {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.15rem;
+    padding: 0.3rem 0.6rem;
+    background: #fef3c7;
+    border: 1.5px solid #f59e0b;
+    border-radius: 0.4rem;
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: #92400e;
+}
+
+.lab-patient-dispute-sub {
+    font-size: 0.68rem;
+    font-weight: 400;
+    color: #b45309;
+}
+
+.lab-patient-resolved-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    padding: 0.25rem 0.6rem;
+    background: #d1fae5;
+    border: 1.5px solid #10b981;
+    border-radius: 0.4rem;
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: #065f46;
+    cursor: help;
+}
+
+/* ── Danger Solid Button ── */
+.btn-danger-solid {
+    background: linear-gradient(135deg, #ef4444 0%, #b91c1c 100%);
+    color: white;
+    border: none;
+    padding: 0.6rem 1.25rem;
+    border-radius: 0.5rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: opacity 0.2s;
+}
+
+.btn-danger-solid:hover {
+    opacity: 0.88;
+}
+
+.btn-danger-solid:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* ── Mobile Refinements ── */
+@media (max-width: 768px) {
+    .lab-modal {
+        max-width: 100%;
+        margin: 0.5rem;
+    }
+    .lab-info-group {
+        grid-template-columns: 1fr;
+    }
+    .lab-financial-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+    .lab-modal-body {
+        padding: 1rem;
+    }
+    .lab-modal-header {
+        padding: 1rem;
+    }
+    .lab-modal-header h2 {
+        font-size: 1rem;
+    }
+}
+
+/* ── Mobile Lab Cards ── */
+.lab-mobile-cards {
+    display: none;
+    flex-direction: column;
+    gap: 1.5rem;
+    padding: 1rem;
+}
+
+@media (max-width: 1024px) {
+    .test-requests-view .medical-ledger-container .table-responsive {
+        display: none !important;
+    }
+    
+    .lab-mobile-cards {
+        display: flex;
+    }
+}
+
+.lab-mobile-card {
+    background: white;
+    border-radius: 20px;
+    padding: 1.5rem;
+    border: 1px solid #f1f5f9;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    position: relative;
+    overflow: hidden;
+}
+
+.lab-mobile-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 1.25rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #f8fafc;
+}
+
+.lab-mobile-card-body {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.lab-mobile-card-info-item {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.lab-mobile-card-label {
+    font-size: 10px;
+    font-weight: 700;
+    color: #94a3b8;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.lab-mobile-card-value {
+    font-size: 13px;
+    font-weight: 600;
+    color: #1e293b;
+}
+
+.lab-mobile-card-actions {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    padding-top: 1.25rem;
+    border-top: 1px solid #f8fafc;
+}
+
+.lab-mobile-card-actions button, 
+.lab-mobile-card-actions a {
+    flex: 1;
+    min-width: 120px;
+}
+
+.lab-mobile-card.dispute-raised {
+    border-left: 4px solid #ef4444;
+    background: #fffafa;
+}

@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CareFusion HMS | Project Deep-Dive</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Outfit:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #00f2fe;
+            --secondary: #4facfe;
+            --accent: #f093fb;
+            --dark: #0f172a;
+            --card-bg: rgba(30, 41, 59, 0.7);
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --glass: rgba(255, 255, 255, 0.05);
+            --border: rgba(255, 255, 255, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--dark);
+            color: var(--text-main);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3 {
+            font-family: 'Outfit', sans-serif;
+            letter-spacing: -0.02em;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* --- Header & Hero --- */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 1rem 0;
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(12px);
+            z-index: 1000;
+            border-bottom: 1px solid var(--border);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        .hero {
+            padding: 10rem 0 6rem;
+            text-align: center;
+            background: radial-gradient(circle at top right, rgba(79, 172, 254, 0.15), transparent),
+                        radial-gradient(circle at bottom left, rgba(240, 147, 251, 0.1), transparent);
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(to bottom, #fff, #94a3b8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            color: var(--text-muted);
+            max-width: 700px;
+            margin: 0 auto 2rem;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            background: var(--glass);
+            border: 1px solid var(--border);
+            border-radius: 2rem;
+            font-size: 0.8rem;
+            margin-bottom: 1.5rem;
+            color: var(--primary);
+        }
+
+        /* --- Sections --- */
+        section {
+            padding: 6rem 0;
+        }
+
+        .section-header {
+            margin-bottom: 3rem;
+        }
+
+        .section-header h2 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .section-header p {
+            color: var(--text-muted);
+        }
+
+        /* --- Tech Stack Grid --- */
+        .tech-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .tech-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            padding: 1.5rem;
+            border-radius: 1rem;
+            transition: transform 0.3s;
+        }
+
+        .tech-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary);
+        }
+
+        .tech-card h3 {
+            font-size: 1rem;
+            margin-bottom: 0.5rem;
+            color: var(--secondary);
+        }
+
+        .tech-card ul {
+            list-style: none;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        /* --- Key Modules --- */
+        .module-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .module-card {
+            background: var(--glass);
+            border: 1px solid var(--border);
+            padding: 2.5rem;
+            border-radius: 1.5rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .module-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(to bottom, var(--primary), var(--accent));
+        }
+
+        .module-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .module-card ul {
+            list-style: none;
+        }
+
+        .module-card li {
+            position: relative;
+            padding-left: 1.5rem;
+            margin-bottom: 0.75rem;
+            font-size: 0.95rem;
+            color: var(--text-muted);
+        }
+
+        .module-card li::before {
+            content: '→';
+            position: absolute;
+            left: 0;
+            color: var(--primary);
+        }
+
+        /* --- Feature Highlights --- */
+        .feature-box {
+            background: linear-gradient(135deg, rgba(30, 41, 59, 0.4), rgba(15, 23, 42, 0.6));
+            border-radius: 2rem;
+            padding: 4rem;
+            border: 1px solid var(--border);
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+        }
+
+        .feature-item h4 {
+            font-size: 1.4rem;
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+
+        .feature-item p {
+            color: var(--text-muted);
+            margin-bottom: 2rem;
+        }
+
+        /* --- Payment Flow --- */
+        .workflow-box {
+            background: rgba(79, 172, 254, 0.05);
+            border: 1px dashed var(--secondary);
+            padding: 2rem;
+            border-radius: 1rem;
+            margin-top: 2rem;
+        }
+
+        .step {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .step-num {
+            width: 24px;
+            height: 24px;
+            background: var(--secondary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 0.8rem;
+            flex-shrink: 0;
+        }
+
+        /* --- Table Styling --- */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 2rem;
+            font-size: 0.9rem;
+        }
+
+        th {
+            text-align: left;
+            color: var(--text-muted);
+            padding: 1rem;
+            border-bottom: 1px solid var(--border);
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            letter-spacing: 0.05em;
+        }
+
+        td {
+            padding: 1rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        /* --- Footer --- */
+        footer {
+            padding: 4rem 0;
+            border-top: 1px solid var(--border);
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2.5rem; }
+            .feature-grid { grid-template-columns: 1fr; }
+            .module-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo">CareFusion HMS</div>
+                <div class="nav-links">
+                    <a href="#overview">Overview</a>
+                    <a href="#tech">Stack</a>
+                    <a href="#modules">Modules</a>
+                    <a href="#features">AI & Advanced</a>
+                    <a href="#setup">Setup</a>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="hero" id="overview">
+            <div class="container">
+                <span class="badge">Comprehensive MERN Architecture</span>
+                <h1>Next-Gen Hospital Ecosystem</h1>
+                <p>A unified platform integrating Patient Care, Clinical Operations, Pharmacy Logistics, and Laboratory Analytics with AI-powered insights.</p>
+            </div>
+        </section>
+
+        <!-- Tech Stack -->
+        <section id="tech">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Technology Matrix</h2>
+                    <p>Built on the industry-standard MERN stack with advanced enterprise integrations.</p>
+                </div>
+                <div class="tech-grid">
+                    <div class="tech-card">
+                        <h3>Core Foundation</h3>
+                        <ul>
+                            <li>React 18 & Vite</li>
+                            <li>Node.js / Express</li>
+                            <li>MongoDB Atlas</li>
+                            <li>JWT / Bcrypt</li>
+                        </ul>
+                    </div>
+                    <div class="tech-card">
+                        <h3>Search & API</h3>
+                        <ul>
+                            <li>Typesense Search Engine</li>
+                            <li>Axios Interceptors</li>
+                            <li>RESTful API Design</li>
+                            <li>Multer File Buffer</li>
+                        </ul>
+                    </div>
+                    <div class="tech-card">
+                        <h3>AI & Processing</h3>
+                        <ul>
+                            <li>Groq / Mistral AI</li>
+                            <li>Google Gemini Pro</li>
+                            <li>PDFKit Generation</li>
+                            <li>QRCode Engine</li>
+                        </ul>
+                    </div>
+                    <div class="tech-card">
+                        <h3>Communication</h3>
+                        <ul>
+                            <li>Nodemailer (SMTP)</li>
+                            <li>Real-time Notifications</li>
+                            <li>Dashboard Analytics</li>
+                            <li>Audit Log System</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Core Modules -->
+        <section id="modules">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Role-Based Ecosystem</h2>
+                    <p>Dedicated modules tailored for every stakeholder in the hospital workflow.</p>
+                </div>
+                <div class="module-grid">
+                    <!-- Admin -->
+                    <div class="module-card">
+                        <h3>🔐 Admin Dashboard</h3>
+                        <ul>
+                            <li>Centralized User Management (CRUD for all roles)</li>
+                            <li>Department & Branch Configuration</li>
+                            <li>Global AI API Key Management</li>
+                            <li>System-wide Audit Logging & Security Logs</li>
+                            <li>Hospital Config (SMTP, Fees, Hospital Info)</li>
+                        </ul>
+                    </div>
+                    <!-- Doctor -->
+                    <div class="module-card">
+                        <h3>👨‍⚕️ Clinical Module</h3>
+                        <ul>
+                            <li>Electronic Medical Records (EMR) Access</li>
+                            <li>Digital Prescription with SHA-256 Sig</li>
+                            <li>Lab Test Requests & Imaging Orders</li>
+                            <li>Real-time OPD Queue Monitoring</li>
+                            <li>AI-Predicted Workload Analytics</li>
+                        </ul>
+                    </div>
+                    <!-- Patient -->
+                    <div class="module-card">
+                        <h3>👤 Patient Portal</h3>
+                        <ul>
+                            <li>Family Member Profile Management</li>
+                            <li>Slot-based Appointment Booking</li>
+                            <li>Prescription & Lab Report Downloads</li>
+                            <li>Payment History & Screenshot Uploads</li>
+                            <li>Departmental & Doctor Feedback</li>
+                        </ul>
+                    </div>
+                    <!-- Pharmacy -->
+                    <div class="module-card">
+                        <h3>💊 Pharmacy & Logistics</h3>
+                        <ul>
+                            <li>Batch-wise Medicine Inventory Tracking</li>
+                            <li>Expiry Alerts & Batch Recall System</li>
+                            <li>Automated GST Billing (12% Standard)</li>
+                            <li>Supplier Management & Purchase Orders</li>
+                            <li>Sales Reports & Demand Forecasting</li>
+                        </ul>
+                    </div>
+                    <!-- Laboratory -->
+                    <div class="module-card">
+                        <h3>🔬 Diagnostic Laboratory</h3>
+                        <ul>
+                            <li>Sample Collection & Technician Assignment</li>
+                            <li>Auto-flagging Abnormal Results</li>
+                            <li>X-ray/MRI Imaging Uploads</li>
+                            <li>Turnaround Time (TAT) Analytics</li>
+                            <li>Historical Parameter Comparison</li>
+                        </ul>
+                    </div>
+                    <!-- Staff -->
+                    <div class="module-card">
+                        <h3>👥 Operations Staff</h3>
+                        <ul>
+                            <li>Real-time Token System (OPD Numbers)</li>
+                            <li>Walk-in Patient Registration</li>
+                            <li>Appointment Verification & Scheduling</li>
+                            <li>Payment Screenshot Review Workflow</li>
+                            <li>Bulk Emergency Appointment Shifting</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Advanced Features -->
+        <section id="features">
+            <div class="container">
+                <div class="feature-box">
+                    <div class="feature-grid">
+                        <div class="feature-item">
+                            <h4>Intelligence System</h4>
+                            <p>Integrated with Groq, Mistral, and Gemini to provide AI-suggested booking slots based on real-time traffic, and clinical decision support.</p>
+                            
+                            <h4>Typesense Search</h4>
+                            <p>Millisecond search latency for medicine catalogs and lab tests. Supports autocomplete, fuzzy matching, and typo tolerance for critical medical queries.</p>
+                            
+                            <h4>Verification & Trust</h4>
+                            <p>Every prescription is cryptographically signed with a SHA-256 hash and unique ID, ensuring tamper-proof digital records.</p>
+                        </div>
+                        <div class="feature-item">
+                            <h4>Unified Payment Workflow</h4>
+                            <div class="workflow-box">
+                                <div class="step">
+                                    <div class="step-num">1</div>
+                                    <p>Patient selects appointment & scans dynamic UPI QR.</p>
+                                </div>
+                                <div class="step">
+                                    <div class="step-num">2</div>
+                                    <p>Transaction ID and Screenshot uploaded to portal.</p>
+                                </div>
+                                <div class="step">
+                                    <div class="step-num">3</div>
+                                    <p>Staff verifies screenshot against hospital records.</p>
+                                </div>
+                                <div class="step">
+                                    <div class="step-num">4</div>
+                                    <p>Appointment confirmed automatically via notification.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Setup Summary -->
+        <section id="setup">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Technical Setup Guide</h2>
+                    <p>Deployment and initialization procedures.</p>
+                </div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Environment</th>
+                            <th>Critical Steps</th>
+                            <th>Default Port</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Backend</strong></td>
+                            <td>npm install, setup .env (DB, JWT, SMTP), node seedAdmin.js</td>
+                            <td>5000</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Frontend</strong></td>
+                            <td>npm install, VITE environment variables</td>
+                            <td>5173</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Typesense</strong></td>
+                            <td>Run Docker/Binary, node scripts/setupTypesense.js</td>
+                            <td>8108</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Storage</strong></td>
+                            <td>Permissions for backend/uploads/ folder</td>
+                            <td>N/A</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 CareFusion Healthcare Solutions. Built with MERN Stack & ❤️</p>
+            <p style="font-size: 0.7rem; margin-top: 1rem; opacity: 0.5;">Project Documentation generated for Enterprise View.</p>
+        </div>
+    </footer>
+
+</body>
+</html>

@@ -1,0 +1,131 @@
+.navbar {
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--slate-200);
+    padding: 1.25rem 0;
+    position: sticky;
+    top: 0;
+    z-index: 1100;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.03);
+}
+
+.navbar-content {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.navbar-brand {
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+}
+
+.navbar-brand h2 {
+    margin: 0;
+    font-size: 1.75rem;
+    font-weight: 900;
+    background: var(--gradient-primary);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    letter-spacing: -1px;
+}
+
+.brand-icon {
+    font-size: 1.75rem;
+    color: var(--primary);
+    filter: drop-shadow(0 4px 6px rgba(99, 102, 241, 0.3));
+}
+
+.mobile-toggle {
+    display: none;
+    background: var(--slate-100);
+    border: none;
+    color: var(--slate-700);
+    font-size: 1.25rem;
+    cursor: pointer;
+    padding: 0.75rem;
+    border-radius: var(--radius-md);
+    transition: all 0.3s ease;
+}
+
+.mobile-toggle:hover {
+    background: var(--slate-200);
+    transform: scale(1.05);
+}
+
+@media (max-width: 768px) {
+    .mobile-toggle {
+        display: block;
+    }
+    
+    .navbar-content {
+        padding: 0 1.5rem;
+    }
+    
+    .navbar-brand h2 {
+        font-size: 1.4rem;
+    }
+}
+
+.navbar-actions {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.user-profile-badge {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    background: var(--slate-50);
+    padding: 0.5rem 1.25rem;
+    border-radius: 9999px;
+    border: 1px solid var(--slate-200);
+}
+
+.user-info {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.user-email {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--slate-500);
+}
+
+.logout-btn {
+    background: var(--slate-900);
+    color: white;
+    padding: 0.625rem 1.25rem;
+    border-radius: 9999px;
+    font-weight: 700;
+    font-size: 0.85rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: all 0.3s ease;
+}
+
+.logout-btn:hover {
+    background: var(--slate-800);
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-md);
+}
+
+.role-badge-pill {
+    background: var(--primary-light);
+    color: var(--primary);
+    padding: 0.25rem 0.75rem;
+    border-radius: 9999px;
+    font-size: 0.7rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
